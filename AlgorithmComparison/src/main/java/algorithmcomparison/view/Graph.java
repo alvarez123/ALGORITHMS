@@ -18,7 +18,9 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import algorithmcomparison.algorithms.BubbleSort;
 import algorithmcomparison.algorithms.MergeSort;
+import algorithmcomparison.generator.RandomArrayGenerator;
 import algorithmcomparison.runtimetest.AlgorithmRuntimeTester;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -30,6 +32,7 @@ public class Graph extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JRadioButton rdbtnNewRadioButton;
+	private RandomArrayGenerator arrayGenerator = new RandomArrayGenerator();
 	private static final int NUM_OF_ITERATIONS = 10;
 
 	/**
@@ -52,15 +55,18 @@ public class Graph extends JFrame {
 	{
 		final XYSeries series1 = new XYSeries("BubbleSort");
 		AlgorithmRuntimeTester test=new AlgorithmRuntimeTester(new BubbleSort());
-		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
-			series1.add(i*1000, test.run(i*1000).getAverageKeyComparisons());
-		}
-		
 		
 		final XYSeries series2= new XYSeries("MergeSort");
 		AlgorithmRuntimeTester test2=new AlgorithmRuntimeTester(new MergeSort());
+		
 		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
-			series2.add(i*1000,test2.run(i*1000).getAverageKeyComparisons());
+			int[] inputArray = arrayGenerator.generate(i*1000);
+			series1.add(i*1000, test.run(inputArray).getAverageKeyComparisons());
+			series2.add(i*1000,test2.run(inputArray).getAverageKeyComparisons());
+		}
+		
+		
+		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
 		}
 		
 		final XYSeriesCollection dataset = new XYSeriesCollection();
