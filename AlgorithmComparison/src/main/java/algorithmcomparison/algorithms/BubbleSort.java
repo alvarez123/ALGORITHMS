@@ -9,6 +9,8 @@ public class BubbleSort implements SortAlgorithm {
 	}
 
 	public void sort(int[] array) {
+		int[] tempArray = new int[array.length];
+		System.arraycopy(array, 0, tempArray, 0, array.length);
 		final long startTime = System.currentTimeMillis();
 		bubbleSort(array);
 		runtimeMilliseconds = (int) (System.currentTimeMillis() - startTime);
@@ -29,19 +31,17 @@ public class BubbleSort implements SortAlgorithm {
 
 	private int[] bubbleSort(final int[] array) {
 		int temp = 0;
-		int[] tempArray = new int[array.length];
-		System.arraycopy(array, 0, tempArray, 0, array.length);
-		for (int i = 0; i < tempArray.length; i++) {
-			for (int j = 1; j < (tempArray.length - i); j++) {
-				if (tempArray[j - 1] > tempArray[j]) {
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 1; j < (array.length - i); j++) {
+				if (array[j - 1] > array[j]) {
 					// swap the elements!
-					temp = tempArray[j - 1];
-					tempArray[j - 1] = tempArray[j];
-					tempArray[j] = temp;
+					temp = array[j - 1];
+					array[j - 1] = array[j];
+					array[j] = temp;
 					numberOfKeyComparisons++;
 				}
 			}
 		}
-		return tempArray;
+		return array;
 	}
 }

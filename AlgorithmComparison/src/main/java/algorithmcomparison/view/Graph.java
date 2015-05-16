@@ -62,11 +62,7 @@ public class Graph extends JFrame {
 		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
 			int[] inputArray = arrayGenerator.generate(i*1000);
 			series1.add(i*1000, test.run(inputArray).getAverageKeyComparisons());
-			series2.add(i*1000,test2.run(inputArray).getAverageKeyComparisons());
-		}
-		
-		
-		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
+			series2.add(i*1000, test2.run(inputArray).getAverageKeyComparisons());
 		}
 		
 		final XYSeriesCollection dataset = new XYSeriesCollection();

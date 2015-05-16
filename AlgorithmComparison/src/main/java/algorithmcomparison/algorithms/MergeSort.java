@@ -9,9 +9,11 @@ public class MergeSort implements SortAlgorithm {
 		reset();
 	}
 
-	public void sort(int[] array) {
+	public void sort(final int[] array) {
+		int[] tempArray = new int[array.length];
+		System.arraycopy(array, 0, tempArray, 0, array.length);
 		final long startTime = System.currentTimeMillis();
-		mergeSort(array);
+		mergeSort(tempArray);
 		runtimeMilliseconds = (int) (System.currentTimeMillis() - startTime);
 	}
 
