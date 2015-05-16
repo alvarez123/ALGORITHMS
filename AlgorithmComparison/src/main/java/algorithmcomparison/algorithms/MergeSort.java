@@ -2,7 +2,7 @@ package algorithmcomparison.algorithms;
 
 public class MergeSort implements SortAlgorithm {
 
-	private long runtimeMilliseconds;
+	private int runtimeMilliseconds;
 	private int numberOfKeyComparisons;
 	
 	public MergeSort() {
@@ -12,19 +12,19 @@ public class MergeSort implements SortAlgorithm {
 	public void sort(int[] array) {
 		final long startTime = System.currentTimeMillis();
 		mergeSort(array);
-		runtimeMilliseconds = System.currentTimeMillis() - startTime;
+		runtimeMilliseconds = (int) (System.currentTimeMillis() - startTime);
 	}
 
 	public int getNumberOfKeyComparisons() {
 		return numberOfKeyComparisons;
 	}
 
-	public long getRuntimeMilliseconds() {
+	public int getRuntimeMilliseconds() {
 		return runtimeMilliseconds;
 	}
 
 	public void reset() {
-		runtimeMilliseconds = 0L;
+		runtimeMilliseconds = 0;
 		numberOfKeyComparisons = 0;
 	}
 	

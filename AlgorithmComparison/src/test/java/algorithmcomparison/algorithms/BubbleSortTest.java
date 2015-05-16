@@ -25,7 +25,7 @@ public class BubbleSortTest {
 			bubbleSortMethod.setAccessible(true);
 		} catch (NoSuchMethodException | SecurityException e) {
 			bubbleSortMethod = null;
-		}
+		}	
 	}
 	
 	@Test
