@@ -43,6 +43,7 @@ public class Graph extends JFrame {
 	private JButton btnNewButton;
 	private JPanel panel;
 	private JButton btnNewButton_1;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -165,19 +166,18 @@ public class Graph extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				final DefaultTableXYDataset dataset = createDataset().get(2);
-				final XYDatasetTableModel tablemodel=new XYDatasetTableModel();
+				final XYDatasetTableModel tableModel=new XYDatasetTableModel();
 			
-				tablemodel.setModel(dataset);
+				tableModel.setModel(dataset);
 				
+				table.setModel(tableModel);
+				table.setVisible(true);
 				
-				JTable dataTable = new JTable(tablemodel);
-				JScrollPane scroll = new JScrollPane(dataTable);
-				scroll.setPreferredSize(new Dimension(750,300));
-				
-				panel.removeAll();
-				panel.add(scroll);
 				btnNewButton_1.setEnabled(true);
-		        
+				
+				panel.repaint();
+				contentPane.repaint();
+				Graph.this.repaint();
 			}
 		});
 		btnNewButton.setBounds(171, 437, 143, 35);
@@ -185,6 +185,10 @@ public class Graph extends JFrame {
 		
 		panel = new JPanel();
 		panel.setBounds(10, 11, 818, 415);
+		table = new JTable();
+		table.setSize(700, 400);
+		table.setVisible(false);
+		panel.add(new JScrollPane(table));
 		contentPane.add(panel);
 		
 		btnNewButton_1 = new JButton("PLOTGRAPH");
