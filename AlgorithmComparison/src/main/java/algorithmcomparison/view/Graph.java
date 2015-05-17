@@ -62,6 +62,7 @@ public class Graph extends JFrame {
 	
 	private ArrayList<DefaultTableXYDataset> createDataset()
 	{
+		 datasets.clear();
 		 XYSeries series1 = new XYSeries("BubbleAverageKeyComparison",true,false);
 		 XYSeries series2 = new XYSeries("BubbleSTDEV",true,false);
 		 XYSeries series3 = new XYSeries("BubbleAverageRunTime",true,false);
@@ -102,7 +103,7 @@ public class Graph extends JFrame {
         dataset2.addSeries(series3);
         dataset2.addSeries(series7);
         
-        final DefaultTableXYDataset dataset3 = new DefaultTableXYDataset();
+        final DefaultTableXYDataset dataset3 = new DefaultTableXYDataset();//For jtable
         dataset3.addSeries(series1);
         dataset3.addSeries(series2);
         dataset3.addSeries(series3);
