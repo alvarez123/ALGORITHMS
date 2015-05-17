@@ -66,13 +66,15 @@ public class Graph extends JFrame {
 		AlgorithmRuntimeTester test2=new AlgorithmRuntimeTester(new MergeSort());
 		
 		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
-			int[] inputArray = arrayGenerator.generate(i*1000);
-			RuntimeStatistics st1=test.run(inputArray);
-			RuntimeStatistics st2=test2.run(inputArray);
+			ArrayList<int[]> arrays = new ArrayList<int[]>();
+			for(int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++)
+				arrays.add(arrayGenerator.generate(i * 1000));
+			RuntimeStatistics st1=test.run(arrays);
+			RuntimeStatistics st2=test2.run(arrays);
 			
 			series1.add(i*1000, st1.getAverageKeyComparisons());
 			series2.add(i*1000, st2.getAverageKeyComparisons());
-			//series3.add(i*1000, st1.getAverageRuntime());
+			series3.add(i*1000, st1.getAverageRuntime());
 			series4.add(i*1000, st2.getAverageRuntime());
 		}
 		
