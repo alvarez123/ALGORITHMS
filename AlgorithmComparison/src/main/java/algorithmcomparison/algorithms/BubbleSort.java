@@ -11,9 +11,9 @@ public class BubbleSort implements SortAlgorithm {
 	public void sort(int[] array) {
 		int[] tempArray = new int[array.length];
 		System.arraycopy(array, 0, tempArray, 0, array.length);
-		final long startTime = System.currentTimeMillis();
+		final long startTime = System.nanoTime();
 		bubbleSort(tempArray);
-		runtimeMilliseconds = System.currentTimeMillis() - startTime;
+		runtimeMilliseconds = System.nanoTime() - startTime;
 	}
 
 	public int getNumberOfKeyComparisons() {

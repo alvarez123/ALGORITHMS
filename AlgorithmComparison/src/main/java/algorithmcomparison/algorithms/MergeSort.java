@@ -12,9 +12,9 @@ public class MergeSort implements SortAlgorithm {
 	public void sort(final int[] array) {
 		int[] tempArray = new int[array.length];
 		System.arraycopy(array, 0, tempArray, 0, array.length);
-		final long startTime = System.currentTimeMillis();
+		final long startTime = System.nanoTime();
 		mergeSort(tempArray);
-		runtimeMilliseconds = System.currentTimeMillis() - startTime;
+		runtimeMilliseconds = System.nanoTime() - startTime;
 	}
 
 	public int getNumberOfKeyComparisons() {
