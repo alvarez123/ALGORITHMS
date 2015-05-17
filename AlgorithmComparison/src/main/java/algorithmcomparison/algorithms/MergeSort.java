@@ -51,7 +51,8 @@ public class MergeSort implements SortAlgorithm {
 	  }
 
 	  private void merge(int low, int middle, int high) {
-
+         
+		 int c=0;
 	    // Copy both parts into the helper array
 	    for (int i = low; i <= high; i++) {
 	      helper[i] = numbers[i];
@@ -71,7 +72,9 @@ public class MergeSort implements SortAlgorithm {
 	        j++;
 	      }
 	      k++;
+	      c++;
 	    }
+	    numberOfKeyComparisons+=c;
 	    // Copy the rest of the left side of the array into the target array
 	    while (i <= middle) {
 	      numbers[k] = helper[i];
@@ -91,7 +94,6 @@ public class MergeSort implements SortAlgorithm {
 		System.arraycopy(array, mid, right, 0, array.length - mid);
 		return merge(mergeSort(left), mergeSort(right));
 	}
-
 	private int[] merge(int[] array1, int[] array2) {
 		int[] dest = new int[array1.length + array2.length];
 		int left = 0;

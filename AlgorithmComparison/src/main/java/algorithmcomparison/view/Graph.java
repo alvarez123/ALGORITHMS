@@ -1,6 +1,7 @@
 package algorithmcomparison.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,22 +10,24 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYDatasetTableModel;
 import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
 import algorithmcomparison.algorithms.BubbleSort;
 import algorithmcomparison.algorithms.MergeSort;
 import algorithmcomparison.generator.RandomArrayGenerator;
 import algorithmcomparison.runtimetest.AlgorithmRuntimeTester;
 import algorithmcomparison.runtimetest.RuntimeStatistics;
+
+import javax.swing.JTable;
 
 public class Graph extends JFrame {
 
@@ -34,10 +37,12 @@ public class Graph extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private RandomArrayGenerator arrayGenerator = new RandomArrayGenerator();
-	public ArrayList<XYDataset> datasets= new ArrayList<XYDataset>();
+	public ArrayList<DefaultTableXYDataset> datasets= new ArrayList<DefaultTableXYDataset>();
+	
 	private static final int NUM_OF_ITERATIONS = 10;
 	private JButton btnNewButton;
-	private JPanel panel1;
+	private JPanel panel;
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -55,40 +60,62 @@ public class Graph extends JFrame {
 		});
 	}
 	
-	private ArrayList<XYDataset> createDataset()
+	private ArrayList<DefaultTableXYDataset> createDataset()
 	{
-		final XYSeries series1 = new XYSeries("BubbleSort");
-		final XYSeries series3 = new XYSeries("BubbleSort");
+		 XYSeries series1 = new XYSeries("BubbleAverageKeyComparison",true,false);
+		 XYSeries series2 = new XYSeries("BubbleSTDEV",true,false);
+		 XYSeries series3 = new XYSeries("BubbleAverageRunTime",true,false);
+		 XYSeries series4 = new XYSeries("BubbleRuntimeSTDEV",true,false);
 		AlgorithmRuntimeTester test=new AlgorithmRuntimeTester(new BubbleSort());
 		
-		final XYSeries series2= new XYSeries("MergeSort");
-		final XYSeries series4=new XYSeries("MergeSort");
+		 XYSeries series5= new XYSeries("MergeAverageKeyComparison",true,false);
+		 XYSeries series6=new XYSeries("MergeSTDEV",true,false);
+		 XYSeries series7= new XYSeries("MergeAverageRunTime",true,false);
+		 XYSeries series8= new XYSeries("MergeRunTimeSTDEV",true,false);
 		AlgorithmRuntimeTester test2=new AlgorithmRuntimeTester(new MergeSort());
 		
 		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
 			ArrayList<int[]> arrays = new ArrayList<int[]>();
 			for(int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++)
 				{arrays.add(arrayGenerator.generate(i * 1000));}
-			//RuntimeStatistics st1=test.run(arrays);
+			RuntimeStatistics st1=test.run(arrays);
 			RuntimeStatistics st2=test2.run(arrays);
 			arrays.clear();
 			
-			//series1.add(i*1000, st1.getAverageKeyComparisons());
-			series2.add(i*1000, st2.getAverageKeyComparisons());
-			//series3.add(i*1000, st1.getAverageRuntime());
-			series4.add(i*1000, st2.getAverageRuntime());
+			//BUBBLESORT
+			series1.add(i*1000, st1.getAverageKeyComparisons());
+			series2.add(i*1000, st1.getStDevKeyComparisons());
+			series3.add(i*1000, st1.getAverageRuntime());
+			series4.add(i*1000, st1.getStDevRuntime());
+		    //MERGE SORT
+			series5.add(i*1000, st2.getAverageKeyComparisons());
+			series6.add(i*1000, st2.getStDevKeyComparisons());
+			series7.add(i*1000, st2.getAverageRuntime());
+			series8.add(i*1000, st2.getStDevRuntime());
 		}
 		
-		final XYSeriesCollection dataset = new XYSeriesCollection();
+		final DefaultTableXYDataset dataset = new DefaultTableXYDataset();  
 		dataset.addSeries(series1);
-        dataset.addSeries(series2);
+        dataset.addSeries(series5);
         
-        final XYSeriesCollection dataset2 = new XYSeriesCollection();
+        final DefaultTableXYDataset dataset2 = new DefaultTableXYDataset();
         dataset2.addSeries(series3);
-        dataset2.addSeries(series4);
+        dataset2.addSeries(series7);
+        
+        final DefaultTableXYDataset dataset3 = new DefaultTableXYDataset();
+        dataset3.addSeries(series1);
+        dataset3.addSeries(series2);
+        dataset3.addSeries(series3);
+        dataset3.addSeries(series4);
+        dataset3.addSeries(series5);
+        dataset3.addSeries(series6);
+        dataset3.addSeries(series7);
+        dataset3.addSeries(series8);
+        
         
         datasets.add(dataset);
         datasets.add(dataset2);
+        datasets.add(dataset3);
         return datasets;
 	}
 	
@@ -110,7 +137,7 @@ public class Graph extends JFrame {
 	private JFreeChart createChartRunTime(final XYDataset dataset){
 		final JFreeChart chart=ChartFactory.createXYLineChart("AVERAGERUNTIME", "INPUTSIZE", "AVGKEYCOMPARISON", dataset);
 		
-		chart.setBorderPaint(Color.YELLOW);
+		chart.setBorderPaint(Color.YELLOW);  
 		
 		final XYPlot plot = chart.getXYPlot();
         plot.setBackgroundPaint(Color.lightGray);
@@ -127,43 +154,61 @@ public class Graph extends JFrame {
 	 */
 	public Graph() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 870, 545);
+		setBounds(100, 100, 854, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		btnNewButton = new JButton("RUNTIME");
+		btnNewButton = new JButton("FILLTABLE");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				final XYDataset dataset = createDataset().get(0);
+				final DefaultTableXYDataset dataset = createDataset().get(2);
+				final XYDatasetTableModel tablemodel=new XYDatasetTableModel();
+			
+				tablemodel.setModel(dataset);
+				
+				
+				JTable dataTable = new JTable(tablemodel);
+				JScrollPane scroll = new JScrollPane(dataTable);
+				scroll.setPreferredSize(new Dimension(750,300));
+				
+				panel.removeAll();
+				panel.add(scroll);
+				btnNewButton_1.setEnabled(true);
+		        
+			}
+		});
+		btnNewButton.setBounds(171, 437, 143, 35);
+		contentPane.add(btnNewButton);
+		
+		panel = new JPanel();
+		panel.setBounds(10, 11, 818, 415);
+		contentPane.add(panel);
+		
+		btnNewButton_1 = new JButton("PLOTGRAPH");
+		btnNewButton_1.setEnabled(false);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				final DefaultTableXYDataset dataset = datasets.get(0);
 				final JFreeChart chart = createChartKey(dataset);
 				
-				 ChartPanel chartPanel = new ChartPanel(chart);
-				 panel1.removeAll();
-				 panel1.add(chartPanel);
-				 panel1.validate();
-			    /*ChartFrame frame=new ChartFrame("KEYCOMPARISON", chart);
+				
+			    ChartFrame frame=new ChartFrame("KEYCOMPARISON", chart);
 			    frame.setVisible(true);
-			    frame.setSize(750,650);*/
+			    frame.setSize(750,650);
 			    
-			    final XYDataset dataset2 = datasets.get(1);
-			    datasets.clear();
+			    final DefaultTableXYDataset dataset2 = datasets.get(1);
 				final JFreeChart chart2 = createChartRunTime(dataset2);
 				
-			     
-			    //ChartPanel chartPanel2 = new ChartPanel(chart2);
-			    
 			    ChartFrame frame2=new ChartFrame("RUNTIME", chart2); 
 			    frame2.setVisible(true);
 			    frame2.setSize(750,650);
+			    btnNewButton_1.setEnabled(false);
+			    datasets.clear();
 			}
 		});
-		btnNewButton.setBounds(354, 441, 119, 35);
-		contentPane.add(btnNewButton);
-		
-		panel1 = new JPanel();
-		panel1.setBounds(10, 11, 823, 399);
-		contentPane.add(panel1);
+		btnNewButton_1.setBounds(505, 437, 143, 35);
+		contentPane.add(btnNewButton_1);
 	}
 }
