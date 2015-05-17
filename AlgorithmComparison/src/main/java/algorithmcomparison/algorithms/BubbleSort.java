@@ -1,7 +1,7 @@
 package algorithmcomparison.algorithms;
 
 public class BubbleSort implements SortAlgorithm {
-	private int runtimeMilliseconds;
+	private long runtimeMilliseconds;
 	private int numberOfKeyComparisons;
 
 	public BubbleSort() {
@@ -13,14 +13,14 @@ public class BubbleSort implements SortAlgorithm {
 		System.arraycopy(array, 0, tempArray, 0, array.length);
 		final long startTime = System.currentTimeMillis();
 		bubbleSort(tempArray);
-		runtimeMilliseconds = (int) (System.currentTimeMillis() - startTime);
+		runtimeMilliseconds = System.currentTimeMillis() - startTime;
 	}
 
 	public int getNumberOfKeyComparisons() {
 		return numberOfKeyComparisons;
 	}
 
-	public int getRuntimeMilliseconds() {
+	public long getRuntimeMilliseconds() {
 		return runtimeMilliseconds;
 	}
 

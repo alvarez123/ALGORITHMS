@@ -4,6 +4,6 @@ public interface SortAlgorithm {
 
 	public void sort(final int[] array);
 	public int getNumberOfKeyComparisons();
-	public int getRuntimeMilliseconds();
+	public long getRuntimeMilliseconds();
 	public void reset();
 }

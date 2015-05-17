@@ -13,7 +13,7 @@ public class AlgorithmRuntimeTester {
 	}
 	
 	public RuntimeStatistics run(ArrayList<int[]> arrays) {
-		int[] runtimeResults = new int[NUM_OF_ITERATIONS];
+		long[] runtimeResults = new long[NUM_OF_ITERATIONS];
 		int[] keyCompResults = new int[NUM_OF_ITERATIONS];
 		
 		for(int i = 0; i < NUM_OF_ITERATIONS; i++){
