@@ -12,7 +12,7 @@ public class BubbleSort implements SortAlgorithm {
 		int[] tempArray = new int[array.length];
 		System.arraycopy(array, 0, tempArray, 0, array.length);
 		final long startTime = System.currentTimeMillis();
-		bubbleSort(array);
+		bubbleSort(tempArray);
 		runtimeMilliseconds = (int) (System.currentTimeMillis() - startTime);
 	}
 
