@@ -37,7 +37,7 @@ public class Graph extends JFrame {
 	public ArrayList<XYDataset> datasets= new ArrayList<XYDataset>();
 	private static final int NUM_OF_ITERATIONS = 10;
 	private JButton btnNewButton;
-	private JPanel panel;
+	private JPanel panel1;
 
 	/**
 	 * Launch the application.
@@ -89,7 +89,7 @@ public class Graph extends JFrame {
         return datasets;
 	}
 	
-	private JFreeChart createChart(final XYDataset dataset){
+	private JFreeChart createChartKey(final XYDataset dataset){
 		final JFreeChart chart=ChartFactory.createXYLineChart("AVERAGEKEYCOMPARISON", "INPUTSIZE", "AVGKEYCOMPARISON", dataset);
 		
 		chart.setBorderPaint(Color.YELLOW);
@@ -104,13 +104,27 @@ public class Graph extends JFrame {
 	}
 	
 	
+	private JFreeChart createChartRunTime(final XYDataset dataset){
+		final JFreeChart chart=ChartFactory.createXYLineChart("AVERAGERUNTIME", "INPUTSIZE", "AVGKEYCOMPARISON", dataset);
+		
+		chart.setBorderPaint(Color.YELLOW);
+		
+		final XYPlot plot = chart.getXYPlot();
+        plot.setBackgroundPaint(Color.lightGray);
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setRangeGridlinePaint(Color.white);
+        
+        return chart;
+		
+	}
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public Graph() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 786, 545);
+		setBounds(100, 100, 870, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -120,28 +134,33 @@ public class Graph extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				final XYDataset dataset = createDataset().get(0);
-				final JFreeChart chart = createChart(dataset);
-			    ChartFrame frame=new ChartFrame("KEYCOMPARISON", chart);
+				final JFreeChart chart = createChartKey(dataset);
+				
+				 ChartPanel chartPanel = new ChartPanel(chart);
+				 panel1.removeAll();
+				 panel1.add(chartPanel);
+				 panel1.validate();
+			    /*ChartFrame frame=new ChartFrame("KEYCOMPARISON", chart);
 			    frame.setVisible(true);
-			    frame.setSize(750,650);
+			    frame.setSize(750,650);*/
 			    
 			    final XYDataset dataset2 = datasets.get(1);
 			    datasets.clear();
-				final JFreeChart chart2 = createChart(dataset2);
-			    //ChartFrame frame2=new ChartFrame("RUNTIME", chart2);  
-			    ChartPanel chartPanel = new ChartPanel(chart2);
-			    panel.removeAll();
-			    panel.add(chartPanel);
-			    panel.validate();
-			    //frame2.setVisible(true);
-			    //frame2.setSize(750,650);
+				final JFreeChart chart2 = createChartRunTime(dataset2);
+				
+			     
+			    //ChartPanel chartPanel2 = new ChartPanel(chart2);
+			    
+			    ChartFrame frame2=new ChartFrame("RUNTIME", chart2); 
+			    frame2.setVisible(true);
+			    frame2.setSize(750,650);
 			}
 		});
-		btnNewButton.setBounds(331, 421, 89, 23);
+		btnNewButton.setBounds(354, 441, 119, 35);
 		contentPane.add(btnNewButton);
 		
-		panel = new JPanel();
-		panel.setBounds(10, 11, 750, 399);
-		contentPane.add(panel);
+		panel1 = new JPanel();
+		panel1.setBounds(10, 11, 823, 399);
+		contentPane.add(panel1);
 	}
 }
