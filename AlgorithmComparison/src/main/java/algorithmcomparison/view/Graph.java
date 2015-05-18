@@ -161,7 +161,7 @@ public class Graph extends JFrame {
 	 * Create the frame.
 	 */
 	public Graph() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 854, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -169,16 +169,17 @@ public class Graph extends JFrame {
 		contentPane.setLayout(null);
 
 		btnNewButton = new JButton("FILLTABLE");
-		
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						Graph.this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 						btnNewButton.setEnabled(false);
-						final DefaultTableXYDataset dataset = createDataset().get(2);
+						final DefaultTableXYDataset dataset = createDataset()
+								.get(2);
 						final XYDatasetTableModel tableModel = new XYDatasetTableModel();
 
 						tableModel.setModel(dataset);
@@ -191,7 +192,7 @@ public class Graph extends JFrame {
 						Graph.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 					}
 				}).start();
-				
+
 			}
 		});
 		btnNewButton.setBounds(171, 437, 143, 35);
@@ -204,7 +205,7 @@ public class Graph extends JFrame {
 		table.setVisible(false);
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		table.setFillsViewportHeight(false);
-		
+
 		panel.add(new JScrollPane(table));
 		contentPane.add(panel);
 

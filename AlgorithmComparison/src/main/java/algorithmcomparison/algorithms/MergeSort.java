@@ -4,7 +4,8 @@ public class MergeSort implements SortAlgorithm {
 
 	private long runtimeMilliseconds;
 	private int numberOfKeyComparisons;
-	
+	private int[] resultArray = null;
+
 	private int[] numbers;
 	private int[] helper;
 	private int number;
@@ -83,6 +84,11 @@ public class MergeSort implements SortAlgorithm {
 	    }
 
 	  }
+
+	@Override
+	public int[] getResultArray() {
+		return resultArray;
+	}
 	
 	/*private int[] mergeSort(final int[] array) {
 		if(array.length == 1)

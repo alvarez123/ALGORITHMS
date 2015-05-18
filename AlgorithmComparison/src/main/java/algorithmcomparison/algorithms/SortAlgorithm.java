@@ -6,4 +6,5 @@ public interface SortAlgorithm {
 	public int getNumberOfKeyComparisons();
 	public long getRuntimeMilliseconds();
 	public void reset();
+	public int[] getResultArray();
 }

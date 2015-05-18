@@ -3,6 +3,7 @@ package algorithmcomparison.algorithms;
 public class BubbleSort implements SortAlgorithm {
 	private long runtimeMilliseconds;
 	private int numberOfKeyComparisons;
+	private int[] resultArray = null;
 
 	public BubbleSort() {
 		reset();
@@ -43,5 +44,10 @@ public class BubbleSort implements SortAlgorithm {
 			}
 		}
 		return array;
+	}
+
+	@Override
+	public int[] getResultArray() {
+		return resultArray;
 	}
 }
