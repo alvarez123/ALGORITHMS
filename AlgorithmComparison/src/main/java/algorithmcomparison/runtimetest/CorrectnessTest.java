@@ -47,9 +47,11 @@ public class CorrectnessTest {
 				writer.newLine();
 				writer.newLine();
 				writer.write("Input\tBubble Sort\tMerge Sort");
+				writer.newLine();
 				int[] resultBubble = bubbleSort.getResultArray();
 				int[] resultMerge = mergeSort.getResultArray();
 				for(int j = 0; j < size; j++){
+					writer.flush();
 					writer.write(String.format("%d\t%d\t%d", inputArray[j], resultBubble[j], resultMerge[j]));
 					writer.newLine();
 				}
