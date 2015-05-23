@@ -1,4 +1,4 @@
-package algorithmcomparison.algorithms;
+package algorithms.algorithmcomparison.algorithms;
 
 public interface SortAlgorithm {
 

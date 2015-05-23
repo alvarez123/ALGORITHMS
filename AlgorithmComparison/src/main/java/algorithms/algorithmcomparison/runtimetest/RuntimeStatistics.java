@@ -1,4 +1,4 @@
-package algorithmcomparison.runtimetest;
+package algorithms.algorithmcomparison.runtimetest;
 
 public class RuntimeStatistics {
 

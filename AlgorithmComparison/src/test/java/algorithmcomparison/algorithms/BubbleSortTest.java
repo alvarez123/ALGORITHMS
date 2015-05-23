@@ -7,6 +7,9 @@ import java.lang.reflect.Method;
 import org.junit.Before;
 import org.junit.Test;
 
+import algorithms.algorithmcomparison.algorithms.BubbleSort;
+import algorithms.algorithmcomparison.algorithms.SortAlgorithm;
+
 public class BubbleSortTest {
 	private static final int array1[] = { 5, 9, 1, 2, 10000, 23452, 7857, 10, 93874, 233, 15687, 90};
 	private static final int array1Sorted[] = {1, 2, 5, 9, 10, 90, 233, 7857, 10000, 15687, 23452, 93874};

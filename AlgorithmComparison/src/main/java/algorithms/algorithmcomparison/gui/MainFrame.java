@@ -1,4 +1,4 @@
-package algorithmcomparison.view;
+package algorithms.algorithmcomparison.gui;
 
 import java.awt.Button;
 import java.awt.Cursor;
@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import algorithmcomparison.runtimetest.CorrectnessTest;
+import algorithms.algorithmcomparison.runtimetest.CorrectnessTest;
 
 public class MainFrame extends JFrame{
 
@@ -52,7 +52,7 @@ public class MainFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new Graph().setVisible(true);
+					new GraphFrame().setVisible(true);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

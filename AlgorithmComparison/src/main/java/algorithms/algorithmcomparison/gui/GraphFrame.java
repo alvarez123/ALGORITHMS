@@ -1,9 +1,9 @@
-package algorithmcomparison.view;
+package algorithms.algorithmcomparison.gui;
 
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,13 +24,13 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYDatasetTableModel;
 import org.jfree.data.xy.XYSeries;
 
-import algorithmcomparison.algorithms.BubbleSort;
-import algorithmcomparison.algorithms.MergeSort;
-import algorithmcomparison.generator.RandomArrayGenerator;
-import algorithmcomparison.runtimetest.AlgorithmRuntimeTester;
-import algorithmcomparison.runtimetest.RuntimeStatistics;
+import algorithms.algorithmcomparison.algorithms.BubbleSort;
+import algorithms.algorithmcomparison.algorithms.MergeSort;
+import algorithms.algorithmcomparison.generator.RandomArrayGenerator;
+import algorithms.algorithmcomparison.runtimetest.AlgorithmRuntimeTester;
+import algorithms.algorithmcomparison.runtimetest.RuntimeStatistics;
 
-public class Graph extends JFrame {
+public class GraphFrame extends JFrame {
 
 	/**
 	 * 
@@ -41,26 +41,10 @@ public class Graph extends JFrame {
 	public ArrayList<DefaultTableXYDataset> datasets = new ArrayList<DefaultTableXYDataset>();
 
 	private static final int NUM_OF_ITERATIONS = 10;
-	private JButton btnNewButton;
+	private JButton buttonFillTable;
 	private JPanel panel;
-	private JButton btnNewButton_1;
+	private JButton buttonPlotGraph;
 	private JTable table;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Graph frame = new Graph();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	private ArrayList<DefaultTableXYDataset> createDataset() {
 		datasets.clear();
@@ -128,7 +112,7 @@ public class Graph extends JFrame {
 
 	private JFreeChart createChartKey(final XYDataset dataset) {
 		final JFreeChart chart = ChartFactory.createXYLineChart(
-				"AVERAGEKEYCOMPARISON", "INPUTSIZE", "AVGKEYCOMPARISON",
+				"AVERAGE KEY COMPARISON", "INPUT SIZE", "AVG KEY COMPARISON",
 				dataset);
 
 		chart.setBorderPaint(Color.YELLOW);
@@ -144,7 +128,7 @@ public class Graph extends JFrame {
 
 	private JFreeChart createChartRunTime(final XYDataset dataset) {
 		final JFreeChart chart = ChartFactory.createXYLineChart(
-				"AVERAGERUNTIME", "INPUTSIZE", "AVGKEYCOMPARISON", dataset);
+				"AVERAGE RUNTIME", "INPUTSIZE", "AVG RUNTIME", dataset);
 
 		chart.setBorderPaint(Color.YELLOW);
 
@@ -160,7 +144,7 @@ public class Graph extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Graph() {
+	public GraphFrame() {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 854, 545);
 		contentPane = new JPanel();
@@ -168,16 +152,16 @@ public class Graph extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnNewButton = new JButton("FILLTABLE");
+		buttonFillTable = new JButton("FILL TABLE");
 
-		btnNewButton.addActionListener(new ActionListener() {
+		buttonFillTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						Graph.this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-						btnNewButton.setEnabled(false);
+						GraphFrame.this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+						buttonFillTable.setEnabled(false);
 						final DefaultTableXYDataset dataset = createDataset()
 								.get(2);
 						final XYDatasetTableModel tableModel = new XYDatasetTableModel();
@@ -187,16 +171,16 @@ public class Graph extends JFrame {
 						table.setModel(tableModel);
 						table.setVisible(true);
 
-						btnNewButton_1.setEnabled(true);
-						btnNewButton.setEnabled(true);
-						Graph.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+						buttonPlotGraph.setEnabled(true);
+						buttonFillTable.setEnabled(true);
+						GraphFrame.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 					}
 				}).start();
 
 			}
 		});
-		btnNewButton.setBounds(171, 437, 143, 35);
-		contentPane.add(btnNewButton);
+		buttonFillTable.setBounds(171, 437, 143, 35);
+		contentPane.add(buttonFillTable);
 
 		panel = new JPanel();
 		panel.setBounds(10, 11, 818, 415);
@@ -209,14 +193,15 @@ public class Graph extends JFrame {
 		panel.add(new JScrollPane(table));
 		contentPane.add(panel);
 
-		btnNewButton_1 = new JButton("PLOTGRAPH");
-		btnNewButton_1.setEnabled(false);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		buttonPlotGraph = new JButton("PLOT GRAPH");
+		buttonPlotGraph.setEnabled(false);
+		buttonPlotGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				final DefaultTableXYDataset dataset = datasets.get(0);
 				final JFreeChart chart = createChartKey(dataset);
 
-				ChartFrame frame = new ChartFrame("KEYCOMPARISON", chart);
+				ChartFrame frame = new ChartFrame("KEY COMPARISON", chart);
+				frame.setLocation(new Point(10, 10));
 				frame.setVisible(true);
 				frame.setSize(750, 650);
 
@@ -224,13 +209,14 @@ public class Graph extends JFrame {
 				final JFreeChart chart2 = createChartRunTime(dataset2);
 
 				ChartFrame frame2 = new ChartFrame("RUNTIME", chart2);
+				frame2.setLocation(new Point(110, 110));
 				frame2.setVisible(true);
 				frame2.setSize(750, 650);
-				btnNewButton_1.setEnabled(false);
+				buttonPlotGraph.setEnabled(false);
 				datasets.clear();
 			}
 		});
-		btnNewButton_1.setBounds(505, 437, 143, 35);
-		contentPane.add(btnNewButton_1);
+		buttonPlotGraph.setBounds(505, 437, 143, 35);
+		contentPane.add(buttonPlotGraph);
 	}
 }

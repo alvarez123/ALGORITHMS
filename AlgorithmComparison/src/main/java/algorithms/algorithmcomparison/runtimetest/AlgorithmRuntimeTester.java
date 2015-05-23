@@ -1,8 +1,8 @@
-package algorithmcomparison.runtimetest;
+package algorithms.algorithmcomparison.runtimetest;
 
 import java.util.ArrayList;
 
-import algorithmcomparison.algorithms.SortAlgorithm;
+import algorithms.algorithmcomparison.algorithms.SortAlgorithm;
 
 public class AlgorithmRuntimeTester {
 	public static final int NUM_OF_ITERATIONS = 10;
