@@ -3,7 +3,7 @@ package algorithms.algorithmcomparison.algorithms;
 public class MergeSort implements SortAlgorithm {
 
 	private long runtimeMilliseconds;
-	private int numberOfKeyComparisons;
+	private long numberOfKeyComparisons;
 
 	private int[] numbers;
 	private int[] helper;
@@ -23,7 +23,7 @@ public class MergeSort implements SortAlgorithm {
 		runtimeMilliseconds = System.nanoTime() - startTime;
 	}
 
-	public int getNumberOfKeyComparisons() {
+	public long getNumberOfKeyComparisons() {
 		return numberOfKeyComparisons;
 	}
 

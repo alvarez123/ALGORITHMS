@@ -53,7 +53,7 @@ public class CorrectnessTest {
 					int[] resultMerge = mergeSort.getResultArray();
 					for(int t = 0; t < size; t++){
 						writer.flush();
-						writer.write(String.format("%d\t%d\t%d", inputArray[j], resultBubble[j], resultMerge[j]));
+						writer.write(String.format("%d\t%d\t%d", inputArray[t], resultBubble[t], resultMerge[t]));
 						writer.newLine();
 					}
 				}

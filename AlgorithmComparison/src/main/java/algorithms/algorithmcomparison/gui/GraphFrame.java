@@ -63,9 +63,10 @@ public class GraphFrame extends JFrame {
 		XYSeries series8 = new XYSeries("MergeRunTimeSTDEV", true, false);
 		AlgorithmRuntimeTester test2 = new AlgorithmRuntimeTester(
 				new MergeSort());
+		ArrayList<int[]> arrays = new ArrayList<int[]>();
 
 		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
-			ArrayList<int[]> arrays = new ArrayList<int[]>();
+			
 			for (int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++) {
 				arrays.add(arrayGenerator.generate(i * 1000));
 			}
@@ -84,6 +85,14 @@ public class GraphFrame extends JFrame {
 			series7.add(i * 1000, st2.getAverageRuntime());
 			series8.add(i * 1000, st2.getStDevRuntime());
 		}
+		
+		
+		for (int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++) {
+			arrays.add(arrayGenerator.generate(25000));
+		}
+		RuntimeStatistics st3 = test.run(arrays);
+		series1.add(25000, st3.getAverageKeyComparisons());
+		series3.add(25000, st3.getAverageRuntime());
 
 		final DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 		dataset.addSeries(series1);
