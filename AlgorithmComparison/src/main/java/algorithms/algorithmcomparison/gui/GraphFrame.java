@@ -87,12 +87,12 @@ public class GraphFrame extends JFrame {
 		}
 		
 		
-		for (int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++) {
+		/*for (int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++) {
 			arrays.add(arrayGenerator.generate(25000));
 		}
 		RuntimeStatistics st3 = test.run(arrays);
 		series1.add(25000, st3.getAverageKeyComparisons());
-		series3.add(25000, st3.getAverageRuntime());
+		series3.add(25000, st3.getAverageRuntime());*/
 
 		final DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 		dataset.addSeries(series1);
