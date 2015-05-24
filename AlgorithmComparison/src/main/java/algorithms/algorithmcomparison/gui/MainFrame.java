@@ -46,7 +46,7 @@ public class MainFrame extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(2, 1));
 		
-		Button button1 = new Button("CHOICE 1");
+		Button button1 = new Button("Runtime and Key Comparison Statistics");
 		button1.addActionListener(new ActionListener() {
 			
 			@Override
@@ -59,7 +59,7 @@ public class MainFrame extends JFrame{
 			}
 		});
 		
-		final Button button2 = new Button("CHOICE 2");
+		final Button button2 = new Button("Correctness Test");
 		button2.addActionListener(new ActionListener() {
 			
 			@Override
