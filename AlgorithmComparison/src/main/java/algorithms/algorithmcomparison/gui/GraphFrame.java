@@ -92,7 +92,10 @@ public class GraphFrame extends JFrame {
 		}
 		RuntimeStatistics st3 = test.run(arrays);
 		series1.add(25000, st3.getAverageKeyComparisons());
-		series3.add(25000, st3.getAverageRuntime());*/
+		series3.add(25000, st3.getAverageRuntime());
+		RuntimeStatistics st4=test2.run(arrays);
+		series5.add(25000 , st4.getAverageKeyComparisons());
+		series7.add(25000 , st4.getAverageRuntime());*/
 
 		final DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 		dataset.addSeries(series1);
