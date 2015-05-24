@@ -15,7 +15,7 @@ public class BubbleSort implements SortAlgorithm {
 		final long startTime = System.nanoTime();
 		bubbleSort(resultArray);
 		runtimeMilliseconds = System.nanoTime() - startTime;
-		
+
 	}
 
 	public long getNumberOfKeyComparisons() {
@@ -32,14 +32,19 @@ public class BubbleSort implements SortAlgorithm {
 	}
 
 	private int[] bubbleSort(final int[] array) {
-		int temp = 0;
-		for (int i = 0; i < array.length; i++) {
-			for (int j = 1; j < (array.length - i); j++) {
-				if (array[j - 1] > array[j]) {
-					// swap the elements!
-					temp = array[j - 1];
-					array[j - 1] = array[j];
-					array[j] = temp;
+		int j;
+		boolean flag = true; // set flag to true to begin first pass
+		int temp; // holding variable
+
+		while (flag) {
+			flag = false; // set flag to false awaiting a possible swap
+			for (j = 0; j < array.length - 1; j++) {
+				if (array[j] > array[j + 1]) // change to > for descending sort
+				{
+					temp = array[j]; // swap elements
+					array[j] = array[j + 1];
+					array[j + 1] = temp;
+					flag = true; // shows a swap occurred
 				}
 				numberOfKeyComparisons++;
 			}
