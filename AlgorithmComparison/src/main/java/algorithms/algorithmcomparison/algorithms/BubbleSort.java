@@ -32,24 +32,28 @@ public class BubbleSort implements SortAlgorithm {
 	}
 
 	private int[] bubbleSort(final int[] array) {
-		int j;
-		boolean flag = true; // set flag to true to begin first pass
-		int temp; // holding variable
+		int lastSwap = array.length - 1;
 
-		while (flag) {
-			flag = false; // set flag to false awaiting a possible swap
-			for (j = 0; j < array.length - 1; j++) {
-				if (array[j] > array[j + 1]) // change to > for descending sort
-				{
-					temp = array[j]; // swap elements
+		for (int i = 1; i < array.length; i++) {
+			boolean is_sorted = true;
+			int currentSwap = -1;
+
+			for (int j = 0; j < lastSwap; j++) {
+				numberOfKeyComparisons++;
+				if (array[j] > array[j + 1]) {
+					int temp = array[j];
 					array[j] = array[j + 1];
 					array[j + 1] = temp;
-					flag = true; // shows a swap occurred
+					is_sorted = false;
+					currentSwap = j;
 				}
-				numberOfKeyComparisons++;
 			}
+			if (is_sorted)
+				break;
+			lastSwap = currentSwap;
 		}
 		return array;
+
 	}
 
 	@Override

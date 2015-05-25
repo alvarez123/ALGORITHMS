@@ -6,9 +6,12 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -45,6 +48,8 @@ public class GraphFrame extends JFrame {
 	private JPanel panel;
 	private JButton buttonPlotGraph;
 	private JTable table;
+	private JCheckBox checkbox;
+	private boolean enable25000 = false;
 
 	private ArrayList<DefaultTableXYDataset> createDataset() {
 		datasets.clear();
@@ -63,39 +68,29 @@ public class GraphFrame extends JFrame {
 		XYSeries series8 = new XYSeries("MergeRunTimeSTDEV", true, false);
 		AlgorithmRuntimeTester test2 = new AlgorithmRuntimeTester(
 				new MergeSort());
-		ArrayList<int[]> arrays = new ArrayList<int[]>();
 
-		for (int i = 1; i <= NUM_OF_ITERATIONS; i++) {
-			
-			for (int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++) {
-				arrays.add(arrayGenerator.generate(i * 1000));
+		ArrayList<int[]> arrays = new ArrayList<int[]>();
+		int limit = (enable25000) ? NUM_OF_ITERATIONS + 1 : NUM_OF_ITERATIONS;
+		for (int i = 1; i <= limit; i++) {
+			int size = (i == NUM_OF_ITERATIONS + 1) ? 25000 : i * 1000;
+			for (int j = 0; j < limit; j++) {
+				arrays.add(arrayGenerator.generate(size));
 			}
 			RuntimeStatistics st1 = test.run(arrays);
 			RuntimeStatistics st2 = test2.run(arrays);
 			arrays.clear();
 
 			// BUBBLESORT
-			series1.add(i * 1000, st1.getAverageKeyComparisons());
-			series2.add(i * 1000, st1.getStDevKeyComparisons());
-			series3.add(i * 1000, st1.getAverageRuntime());
-			series4.add(i * 1000, st1.getStDevRuntime());
+			series1.add(size, st1.getAverageKeyComparisons());
+			series2.add(size, st1.getStDevKeyComparisons());
+			series3.add(size, st1.getAverageRuntime());
+			series4.add(size, st1.getStDevRuntime());
 			// MERGE SORT
-			series5.add(i * 1000, st2.getAverageKeyComparisons());
-			series6.add(i * 1000, st2.getStDevKeyComparisons());
-			series7.add(i * 1000, st2.getAverageRuntime());
-			series8.add(i * 1000, st2.getStDevRuntime());
+			series5.add(size, st2.getAverageKeyComparisons());
+			series6.add(size, st2.getStDevKeyComparisons());
+			series7.add(size, st2.getAverageRuntime());
+			series8.add(size, st2.getStDevRuntime());
 		}
-		
-		
-		/*for (int j = 0; j < AlgorithmRuntimeTester.NUM_OF_ITERATIONS; j++) {
-			arrays.add(arrayGenerator.generate(25000));
-		}
-		RuntimeStatistics st3 = test.run(arrays);
-		series1.add(25000, st3.getAverageKeyComparisons());
-		series3.add(25000, st3.getAverageRuntime());
-		RuntimeStatistics st4=test2.run(arrays);
-		series5.add(25000 , st4.getAverageKeyComparisons());
-		series7.add(25000 , st4.getAverageRuntime());*/
 
 		final DefaultTableXYDataset dataset = new DefaultTableXYDataset();
 		dataset.addSeries(series1);
@@ -157,7 +152,7 @@ public class GraphFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public GraphFrame() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 854, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -172,7 +167,8 @@ public class GraphFrame extends JFrame {
 
 					@Override
 					public void run() {
-						GraphFrame.this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+						GraphFrame.this
+								.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 						buttonFillTable.setEnabled(false);
 						final DefaultTableXYDataset dataset = createDataset()
 								.get(2);
@@ -185,13 +181,15 @@ public class GraphFrame extends JFrame {
 
 						buttonPlotGraph.setEnabled(true);
 						buttonFillTable.setEnabled(true);
-						GraphFrame.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+						GraphFrame.this.setCursor(new Cursor(
+								Cursor.DEFAULT_CURSOR));
 					}
 				}).start();
 
 			}
 		});
-		buttonFillTable.setBounds(171, 437, 143, 35);
+
+		buttonFillTable.setBounds(100, 437, 143, 35);
 		contentPane.add(buttonFillTable);
 
 		panel = new JPanel();
@@ -228,7 +226,19 @@ public class GraphFrame extends JFrame {
 				datasets.clear();
 			}
 		});
-		buttonPlotGraph.setBounds(505, 437, 143, 35);
+		buttonPlotGraph.setBounds(600, 437, 143, 35);
+		checkbox = new JCheckBox("Enable 25000 Input");
+		checkbox.setBounds(300, 437, 143, 35);
+		checkbox.setVisible(true);
+		checkbox.setMaximumSize(new Dimension(250, 50));
+		checkbox.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				enable25000 = checkbox.isSelected();
+			}
+		});
+		contentPane.add(checkbox);
 		contentPane.add(buttonPlotGraph);
 	}
 }
